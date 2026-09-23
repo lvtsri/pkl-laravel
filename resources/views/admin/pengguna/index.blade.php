@@ -26,7 +26,7 @@
           $no = 1;
         ?>
         <tbody>
-          @foreach ($pengguna as $item)
+          @forelse ($pengguna as $item)
             <tr>
               <td>{{ $no++ }}</td>
               <td>{{ $item->username }}</td>
@@ -49,7 +49,11 @@
                 </a>
               </td>
             </tr>
-          @endforeach
+          @empty
+            <tr>
+              <td colspan="5" class="text-center">Data pengguna tidak ditemukan</td>
+            </tr>
+          @endforelse
         </tbody>
       </table>
     </div>

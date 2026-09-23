@@ -50,13 +50,13 @@ Route::prefix('admin')->group(function () {
     Route::get('/jurusan', [JurusanController::class, 'index'])->name('admin.jurusan');
     Route::post('/jurusan', [JurusanController::class, 'store'])->name('admin.jurusan.store');
     Route::put('/jurusan/{id}', [JurusanController::class, 'update'])->name('admin.jurusan.update');
-    Route::delete('/jurusan/{id}', [JurusanController::class, 'destroy'])->name('admin.jurusan.destroy');
+    Route::delete('/jurusan/{kode_jurusan}', [JurusanController::class, 'destroy'])->name('admin.jurusan.destroy');
 
     // 5. Mata Kuliah (Makul)
     Route::get('/makul', [MakulController::class, 'index'])->name('admin.makul');
     Route::post('/makul', [MakulController::class, 'store'])->name('admin.makul.store');
-    Route::put('/makul/{id}', [MakulController::class, 'update'])->name('admin.makul.update');
-    Route::delete('/makul/{id}', [MakulController::class, 'destroy'])->name('admin.makul.destroy');
+    Route::put('/makul/{kode_makul}', [MakulController::class, 'update'])->name('admin.makul.update');
+    Route::delete('/makul/{kode_makul}', [MakulController::class, 'destroy'])->name('admin.makul.destroy');
 
     // 6. Kelas Makul
     Route::get('/kelas-makul', [KelasMakulController::class, 'index'])->name('admin.kelas_makul');
@@ -67,8 +67,8 @@ Route::prefix('admin')->group(function () {
     // 7. Akademik
     Route::get('/akademik', [AkademikController::class, 'index'])->name('admin.akademik');
     Route::post('/akademik', [AkademikController::class, 'store'])->name('admin.akademik.store');
-    Route::put('/akademik/{id}', [AkademikController::class, 'update'])->name('admin.akademik.update');
-    Route::delete('/akademik/{id}', [AkademikController::class, 'destroy'])->name('admin.akademik.destroy');
+    Route::put('/akademik/{kode_akd}', [AkademikController::class, 'update'])->name('admin.akademik.update');
+    Route::delete('/akademik/{kode_akd}', [AkademikController::class, 'destroy'])->name('admin.akademik.destroy');
 
     // 8. Password / Ganti Sandi Admin
     Route::get('/password', [PasswordController::class, 'index'])->name('admin.password');

@@ -12,6 +12,7 @@ class Makul extends Model
     protected $keyType = 'string';
     
     protected $fillable = [
+        'kode_makul',
         'nama_makul',
         'jml_sks',
         'jml_cpmk'

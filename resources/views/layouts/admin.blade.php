@@ -151,14 +151,22 @@
     <!-- Content Wrapper -->
     <div class="content-wrapper">
         <div class="content-header">
-        <div class="container-fluid">
-            @yield('content-header')
-        </div>
+            <div class="container-fluid">
+                @yield('content-header')
+            </div>
         </div>
         <div class="content">
-        <div class="container-fluid">
-            @yield('content')
-        </div>
+            <div class="container-fluid">
+                @if(session('error'))
+                    <div class="alert alert-danger">{{ session('error') }}</div>
+                @endif
+
+                @if(session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @endif
+                
+                @yield('content')
+            </div>
         </div>
     </div>
 
@@ -194,5 +202,6 @@
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         });
     </script>
+    @stack('scripts')
 </body>
 </html>

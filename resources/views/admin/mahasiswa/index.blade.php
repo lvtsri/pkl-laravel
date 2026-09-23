@@ -29,7 +29,7 @@
         $no = 1;
         ?>
         <tbody>
-          @foreach ($mahasiswa as $m)
+          @forelse ($mahasiswa as $m)
             <tr>
               <td>{{ $no++ }}</td>
               <td>{{ $m->nim }}</td>
@@ -53,7 +53,11 @@
                 </a>
               </td>
             </tr>
-          @endforeach
+          @empty
+            <tr>
+              <td colspan="6" class="text-center">Data mahasiswa tidak ditemukan</td>
+            </tr>
+          @endforelse
         </tbody>
       </table>
     </div>

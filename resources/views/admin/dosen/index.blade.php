@@ -29,7 +29,7 @@
         $no = 1;
         ?>
         <tbody>
-          @foreach ($dosen as $d)
+          @forelse ($dosen as $d)
             <tr>
               <td>{{ $no++ }}</td>
               <td>{{ $d->nik }}</td>
@@ -52,8 +52,12 @@
                   <i class="fas fa-trash"></i>
                 </a>
               </td>
+            </tr>          
+          @empty
+            <tr>
+              <td colspan="6" class="text-center">Data dosen tidak ditemukan</td>
             </tr>
-          @endforeach
+          @endforelse
         </tbody>
       </table>
     </div>
