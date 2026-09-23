@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
 @section('content-header')
-  <h1>Beranda</h1><hr>
+  <h1>Update Password</h1><hr>
 @endsection
 
 @section('content')
-  <p>Selamat datang, pengguna {{ session('nama') }}!</p>
+  <p>Halaman admin - ganti pass</p>
 @endsection

@@ -4,16 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pengguna extends Model
+class Detail_kelas_makul extends Model
 {
-    protected $table = 'tb_pengguna';
+    protected $table = 'tb_detail_kls_mk';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'username',
-        'sandi',
-        'peran',
-        'pin',
-        'nama'
+        'kode_kelas',
+        'nim'
     ];
     public $timestamps = false;
 }

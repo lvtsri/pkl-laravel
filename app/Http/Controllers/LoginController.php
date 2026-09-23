@@ -67,57 +67,13 @@ class LoginController extends Controller
         session([
             'user_id' => $pengguna->id,
             'username' => $pengguna->username,
-            'peran' => $pengguna->peran
+            'peran' => $pengguna->peran,
+            'nama' => $pengguna->nama
         ]);
 
         session()->forget('pin_user_id');
 
         return $this->redirectByRole($pengguna);
-    }
-
-
-    // HALAMAN UPDATE PIN (Dari tombol Home)
-    public function showChangePin()
-    {
-        return view('auth.ubah_pin');
-    }
-
-    public function updatePin(Request $request)
-    {
-        // Ambil ID user yang sedang login
-        $userId = session('user_id');
-
-        if (!$userId) {
-            return redirect()->route('login')
-                ->with('login_error', 'Sesi login sudah berakhir. Silakan login kembali.');
-        }
-
-        $pengguna = Pengguna::find($userId);
-
-        if (!$pengguna) {
-            return redirect()->route('login')
-                ->with('login_error', 'Data pengguna tidak ditemukan.');
-        }
-
-        $pinLama = $request->pin_lama;
-        $pinBaru = $request->pin_baru;
-        $konfirmasiPin = $request->konfirmasi_pin;
-
-        // Cek PIN lama
-        if ((string) $pinLama !== (string) $pengguna->pin) {
-            return back()->with('pin_error', 'PIN lama salah.');
-        }
-
-        // Cek PIN baru dan konfirmasi
-        if ($pinBaru != $konfirmasiPin) {
-            return back()->with('pin_error', 'Konfirmasi PIN baru tidak sesuai.');
-        }
-
-        // Update PIN
-        $pengguna->pin = $pinBaru;
-        $pengguna->save();
-
-        return $this->redirectByRole($pengguna)->with('pin_success', 'PIN berhasil diubah.');
     }
 
     // REDIRECT BERDASARKAN PERAN
