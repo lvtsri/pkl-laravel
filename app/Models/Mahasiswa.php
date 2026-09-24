@@ -9,6 +9,7 @@ class Mahasiswa extends Model
     protected $table = 'tb_mahasiswa';
     protected $primaryKey = 'nim';
     protected $fillable = [
+        'nim',
         'nama',
         'kontak',
         'email',

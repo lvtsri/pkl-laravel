@@ -7,7 +7,7 @@
 @section('content')
   <div class="card">
     <div class="card-body">
-      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal-tambah-dosen">
+      <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal-tambah">
         <i class="fas fa-plus"></i>
         Tambah Data
       </button>
@@ -45,12 +45,26 @@
               </td>
               <td>{{ $d->img }}</td>
               <td class="text-center">
-                <a href="" class="btn btn-warning btn-sm">
-                  <i class="fas fa-pen"></i>
-                </a>
-                <a href="" class="btn btn-danger btn-sm" onclick="return confirm('Data dosen yang dipilih akan dihapus. Lanjutkan?')">
-                  <i class="fas fa-trash"></i>
-                </a>
+                <div style="display: flex; gap: 5px; justify-content: center;">
+                  <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit"
+                    data-nik = "{{ $d->nik }}"
+                    data-nama = "{{ $d->nama }}"
+                    data-kontak = "{{ $d->kontak }}"
+                    data-email = "{{ $d->email }}"
+                    data-kelamin = "{{ $d->kelamin }}"
+                  >
+                    <i class="fas fa-pen"></i>
+                  </button>
+
+                  <form action="{{ route('admin.dosen.destroy', $d->nik) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Data dosen yang dipilih akan dihapus. Lanjutkan?')">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+                </div>
               </td>
             </tr>          
           @empty
@@ -62,4 +76,141 @@
       </table>
     </div>
   </div>
+
+  <!-- MODAL TAMBAH -->
+  <div class="modal fade" id="modal-tambah">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Tambah Data Dosen</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="{{ route('admin.dosen.store') }}" method="post">
+          @csrf
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="">NIK</label>
+              <input type="text" class="form-control" name="nik" placeholder="Masukkan NIK" required>
+            </div>
+
+            <div class="form-group">
+              <label for="">Nama</label>
+              <input type="text" class="form-control" name="nama" placeholder="Masukkan nama dosen" required>
+            </div>
+
+            <div class="form-group">
+              <label for="">Kontak</label>
+              <input type="number" class="form-control" name="kontak" placeholder="Masukkan nomor kontak" required>
+            </div>
+
+            <div class="form-group">
+              <label for="">Email</label>
+              <input type="email" class="form-control" name="email" placeholder="Masukkan email" required>
+            </div>
+
+            <div class="form-group">
+              <label>Jenis Kelamin</label>
+              <select class="form-control" name="kelamin" required>
+                <option value="">-- Pilih Jenis Kelamin --</option>
+                <option value="P">Perempuan</option>
+                <option value="L">Laki-laki</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            <button type="submit" name="btn_tambah" class="btn btn-primary">
+              <i class="fas fa-plus"></i>
+              Tambah
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+  <!-- MODAL EDIT -->
+  <div class="modal fade" id="modal-edit">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Edit Informasi Dosen</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id="form-edit" method="post">
+          @csrf
+          @method('PUT')
+
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="">NIK</label>
+              <input type="text" class="form-control" name="nik" readonly required>
+            </div>
+
+            <div class="form-group">
+              <label for="">Nama</label>
+              <input type="text" class="form-control" name="nama" required>
+            </div>
+
+            <div class="form-group">
+              <label for="">Kontak</label>
+              <input type="number" class="form-control" name="kontak" placeholder="Masukkan nomor kontak" required>
+            </div>
+
+            <div class="form-group">
+              <label for="">Email</label>
+              <input type="email" class="form-control" name="email" placeholder="Masukkan email" required>
+            </div>
+
+            <div class="form-group">
+              <label>Jenis Kelamin</label>
+              <select class="form-control" name="kelamin" required>
+                <option value="">-- Pilih Jenis Kelamin --</option>
+                <option value="P">Perempuan</option>
+                <option value="L">Laki-laki</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            <button type="submit" name="btn_edit" class="btn btn-warning">
+              <i class="fas fa-pen"></i>
+              Simpan Perubahan
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
 @endsection
+
+@push('scripts')
+<script>
+  $('#modal-edit').on('show.bs.modal', function(e){
+    var button = $(e.relatedTarget);
+    var nik = button.data('nik');
+    var nama = button.data('nama');
+    var kontak = button.data('kontak');
+    var email = button.data('email');
+    var kelamin = button.data('kelamin');
+
+    var modal = $(this);
+    modal.find('input[name="nik"]').val(nik);
+    modal.find('input[name="nama"]').val(nama);
+    modal.find('input[name="kontak"]').val(kontak);
+    modal.find('input[name="email"]').val(email);
+    modal.find('select[name="kelamin"]').val(kelamin);
+
+    var updateUrl = "{{ url('admin/dosen') }}/" + encodeURIComponent(nik);
+    modal.find('#form-edit').attr('action', updateUrl);
+  });
+</script>  
+@endpush

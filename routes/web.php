@@ -29,22 +29,22 @@ Route::prefix('admin')->group(function () {
     // 1. Pengguna
     Route::get('/pengguna', [PenggunaController::class, 'index'])->name('admin.pengguna');
     Route::post('/pengguna', [PenggunaController::class, 'store'])->name('admin.pengguna.store');
-    Route::put('/pengguna/{id}', [PenggunaController::class, 'update'])->name('admin.pengguna.update');
-    Route::delete('/pengguna/{id}', [PenggunaController::class, 'destroy'])->name('admin.pengguna.destroy');
+    Route::put('/pengguna/{username}', [PenggunaController::class, 'update'])->name('admin.pengguna.update');
+    Route::delete('/pengguna/{username}', [PenggunaController::class, 'destroy'])->name('admin.pengguna.destroy');
 
     // 2. Dosen (Contoh lengkap dengan fitur tambahan Excel/PDF ala native PHP)
     Route::get('/dosen', [DosenController::class, 'index'])->name('admin.dosen');
     Route::post('/dosen', [DosenController::class, 'store'])->name('admin.dosen.store');
-    Route::put('/dosen/{id}', [DosenController::class, 'update'])->name('admin.dosen.update');
-    Route::delete('/dosen/{id}', [DosenController::class, 'destroy'])->name('admin.dosen.destroy');
+    Route::put('/dosen/{nik}', [DosenController::class, 'update'])->name('admin.dosen.update');
+    Route::delete('/dosen/{nik}', [DosenController::class, 'destroy'])->name('admin.dosen.destroy');
     Route::get('/dosen/excel', [DosenController::class, 'exportExcel'])->name('admin.dosen.excel');
     Route::get('/dosen/pdf', [DosenController::class, 'exportPdf'])->name('admin.dosen.pdf');
 
     // 3. Mahasiswa
     Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('admin.mahasiswa');
     Route::post('/mahasiswa', [MahasiswaController::class, 'store'])->name('admin.mahasiswa.store');
-    Route::put('/mahasiswa/{id}', [MahasiswaController::class, 'update'])->name('admin.mahasiswa.update');
-    Route::delete('/mahasiswa/{id}', [MahasiswaController::class, 'destroy'])->name('admin.mahasiswa.destroy');
+    Route::put('/mahasiswa/{nim}', [MahasiswaController::class, 'update'])->name('admin.mahasiswa.update');
+    Route::delete('/mahasiswa/{nim}', [MahasiswaController::class, 'destroy'])->name('admin.mahasiswa.destroy');
 
     // 4. Jurusan
     Route::get('/jurusan', [JurusanController::class, 'index'])->name('admin.jurusan');

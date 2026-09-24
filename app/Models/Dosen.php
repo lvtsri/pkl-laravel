@@ -9,6 +9,7 @@ class Dosen extends Model
     protected $table = 'tb_dosen';
     protected $primaryKey = 'nik';
     protected $fillable = [
+        'nik',
         'nama',
         'kontak',
         'email',
