@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Admin\JurusanController;
 use App\Http\Controllers\Admin\MakulController;
 use App\Http\Controllers\Admin\KelasMakulController;
+use App\Http\Controllers\Admin\DetailKelasController;
+use App\Http\Controllers\Admin\PertemuanController;
 use App\Http\Controllers\Admin\AkademikController;
 use App\Http\Controllers\Admin\PasswordController;
 
@@ -26,13 +28,13 @@ Route::prefix('admin')->group(function () {
     // Dashboard Beranda
     Route::get('/', [DashboardController::class, 'index'])->name('admin');
 
-    // 1. Pengguna
+    // Pengguna
     Route::get('/pengguna', [PenggunaController::class, 'index'])->name('admin.pengguna');
     Route::post('/pengguna', [PenggunaController::class, 'store'])->name('admin.pengguna.store');
     Route::put('/pengguna/{username}', [PenggunaController::class, 'update'])->name('admin.pengguna.update');
     Route::delete('/pengguna/{username}', [PenggunaController::class, 'destroy'])->name('admin.pengguna.destroy');
 
-    // 2. Dosen (Contoh lengkap dengan fitur tambahan Excel/PDF ala native PHP)
+    // Dosen
     Route::get('/dosen', [DosenController::class, 'index'])->name('admin.dosen');
     Route::post('/dosen', [DosenController::class, 'store'])->name('admin.dosen.store');
     Route::put('/dosen/{nik}', [DosenController::class, 'update'])->name('admin.dosen.update');
@@ -40,37 +42,42 @@ Route::prefix('admin')->group(function () {
     Route::get('/dosen/excel', [DosenController::class, 'exportExcel'])->name('admin.dosen.excel');
     Route::get('/dosen/pdf', [DosenController::class, 'exportPdf'])->name('admin.dosen.pdf');
 
-    // 3. Mahasiswa
+    // Mahasiswa
     Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('admin.mahasiswa');
     Route::post('/mahasiswa', [MahasiswaController::class, 'store'])->name('admin.mahasiswa.store');
     Route::put('/mahasiswa/{nim}', [MahasiswaController::class, 'update'])->name('admin.mahasiswa.update');
     Route::delete('/mahasiswa/{nim}', [MahasiswaController::class, 'destroy'])->name('admin.mahasiswa.destroy');
 
-    // 4. Jurusan
+    // Jurusan
     Route::get('/jurusan', [JurusanController::class, 'index'])->name('admin.jurusan');
     Route::post('/jurusan', [JurusanController::class, 'store'])->name('admin.jurusan.store');
     Route::put('/jurusan/{id}', [JurusanController::class, 'update'])->name('admin.jurusan.update');
     Route::delete('/jurusan/{kode_jurusan}', [JurusanController::class, 'destroy'])->name('admin.jurusan.destroy');
 
-    // 5. Mata Kuliah (Makul)
+    // Mata Kuliah (Makul)
     Route::get('/makul', [MakulController::class, 'index'])->name('admin.makul');
     Route::post('/makul', [MakulController::class, 'store'])->name('admin.makul.store');
     Route::put('/makul/{kode_makul}', [MakulController::class, 'update'])->name('admin.makul.update');
     Route::delete('/makul/{kode_makul}', [MakulController::class, 'destroy'])->name('admin.makul.destroy');
 
-    // 6. Kelas Makul
+    // Kelas Makul
     Route::get('/kelas-makul', [KelasMakulController::class, 'index'])->name('admin.kelas_makul');
     Route::post('/kelas-makul', [KelasMakulController::class, 'store'])->name('admin.kelas_makul.store');
-    Route::put('/kelas-makul/{id}', [KelasMakulController::class, 'update'])->name('admin.kelas_makul.update');
-    Route::delete('/kelas-makul/{id}', [KelasMakulController::class, 'destroy'])->name('admin.kelas_makul.destroy');
+    Route::put('/kelas-makul/{kode_kelas}', [KelasMakulController::class, 'update'])->name('admin.kelas_makul.update');
+    Route::delete('/kelas-makul/{kode_kelas}', [KelasMakulController::class, 'destroy'])->name('admin.kelas_makul.destroy');
 
-    // 7. Akademik
+    Route::get('/kelas-makul/pertemuan', [PertemuanController::class, 'index'])->name('admin.kelas_makul.pertemuan');
+
+    // Detail Kelas
+    Route::get('/detail-kelas', [DetailKelasController::class, 'index'])->name('admin.detail_kelas');
+
+    // Akademik
     Route::get('/akademik', [AkademikController::class, 'index'])->name('admin.akademik');
     Route::post('/akademik', [AkademikController::class, 'store'])->name('admin.akademik.store');
     Route::put('/akademik/{kode_akd}', [AkademikController::class, 'update'])->name('admin.akademik.update');
     Route::delete('/akademik/{kode_akd}', [AkademikController::class, 'destroy'])->name('admin.akademik.destroy');
 
-    // 8. Password / Ganti Sandi Admin
+    // Password / Ganti Sandi Admin
     Route::get('/password', [PasswordController::class, 'index'])->name('admin.password');
     Route::put('/password/update', [PasswordController::class, 'update'])->name('admin.password.update');
 });
