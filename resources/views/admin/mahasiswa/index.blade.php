@@ -43,7 +43,13 @@
                   Laki-laki
                 @endif
               </td>
-              <td>{{ $m->img }}</td>
+              <td>
+                @if ($m->kelamin == 'P')
+                  <img src="{{ !empty($img) ? $img : asset('asset_web/img/mhs-woman.jpg') }}" style="width: 60px; height: 60px; object-fit: cover;">
+                @else
+                  <img src="{{ !empty($img) ? $img : asset('asset_web/img/mhs-man.jpg') }}" style="width: 60px; height: 60px; object-fit: cover;">
+                @endif
+              </td>
               <td class="text-center">
                 <div style="display: flex; gap: 5px; justify-content: center;">
                   <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit"

@@ -62,7 +62,7 @@
               <td class="text-left">{{ $km->jurusan->nama_jurusan }}</td>
               <td class="text-left">{{ $km->dosen->nama }}</td>
               <td>
-                <a href="{{ route('admin.kelas_makul.pertemuan') }}" class="btn btn-success btn-sm">
+                <a href="{{ route('admin.kelas_makul.pertemuan', ['kode_kelas' => $km->kode_kelas]) }}" class="btn btn-success btn-sm">
                   <i class="fas fa-qrcode"></i>
                 </a>
                 <a href="{{ route('admin.detail_kelas') }}" class="btn btn-primary btn-sm">

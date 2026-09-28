@@ -14,4 +14,8 @@ class Presensi extends Model
         'status_kehadiran'
     ];
     public $timestamps = false;
+
+    public function mahasiswa(){
+        return $this->belongsTo(Mahasiswa::class, 'nim', 'nim');
+    }
 }

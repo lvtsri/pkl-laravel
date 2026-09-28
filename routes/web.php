@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\MakulController;
 use App\Http\Controllers\Admin\KelasMakulController;
 use App\Http\Controllers\Admin\DetailKelasController;
 use App\Http\Controllers\Admin\PertemuanController;
+use App\Http\Controllers\Admin\PresensiController;
 use App\Http\Controllers\Admin\AkademikController;
 use App\Http\Controllers\Admin\PasswordController;
 
@@ -66,8 +67,14 @@ Route::prefix('admin')->group(function () {
     Route::put('/kelas-makul/{kode_kelas}', [KelasMakulController::class, 'update'])->name('admin.kelas_makul.update');
     Route::delete('/kelas-makul/{kode_kelas}', [KelasMakulController::class, 'destroy'])->name('admin.kelas_makul.destroy');
 
-    Route::get('/kelas-makul/pertemuan', [PertemuanController::class, 'index'])->name('admin.kelas_makul.pertemuan');
+    Route::get('/kelas-makul/pertemuan/{kode_kelas}', [PertemuanController::class, 'index'])->name('admin.kelas_makul.pertemuan');
+    Route::post('/kelas-makul/pertemuan/{kode_kelas}', [PertemuanController::class, 'store'])->name('admin.kelas_makul.pertemuan.store');
+    Route::put('/kelas-makul/pertemuan/{id}', [PertemuanController::class, 'update'])->name('admin.kelas_makul.pertemuan.update');
+    Route::delete('/kelas-makul/pertemuan/{id}', [PertemuanController::class, 'destroy'])->name('admin.kelas_makul.pertemuan.destroy');
 
+    Route::get('kelas-makul/presensi/{id_pertemuan}', [PresensiController::class, 'index'])->name('admin.kelas_makul.presensi');
+    Route::put('/kelas-makul/presensi/{id}/toggle', [PresensiController::class, 'toggleStatus'])->name('admin.kelas_makul.presensi.toggle');
+    Route::put('/kelas-makul/presensi/kehadiran/{id}', [PresensiController::class, 'ubahKehadiran'])->name('admin.kelas_makul.presensi.kehadiran');
     // Detail Kelas
     Route::get('/detail-kelas', [DetailKelasController::class, 'index'])->name('admin.detail_kelas');
 

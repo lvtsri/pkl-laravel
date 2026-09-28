@@ -32,4 +32,8 @@ class KelasMakul extends Model
     public function dosen(){
         return $this->belongsTo(Dosen::class, 'nik', 'nik');
     }
+
+    public function pertemuan(){
+        return $this->belongsTo(Pertemuan::class, 'id', 'id');
+    }
 }
