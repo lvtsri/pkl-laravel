@@ -63,4 +63,12 @@ class PresensiController extends Controller
 
         return redirect()->back()->with('success', 'Status kehadiran mahasiswa berhasil diperbarui!');
     }
+
+    public function ubahStatus($id_pertemuan)
+    {
+        $pertemuan = Pertemuan::findOrFail($id_pertemuan);
+        $pertemuan->update(['status_pertemuan' => '0']);
+
+        return redirect()->back()->with('error', 'Waktu presensi telah habis! Presensi ditutup');
+    }
 }

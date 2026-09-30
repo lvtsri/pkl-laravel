@@ -13,4 +13,8 @@ class DetailKelasMakul extends Model
         'nim'
     ];
     public $timestamps = false;
+
+    public function mahasiswa(){
+        return $this->belongsTo(Mahasiswa::class, 'nim', 'nim');
+    }
 }

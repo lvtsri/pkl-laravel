@@ -9,7 +9,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Presensi</h3>
+                <h3 class="card-title">[{{ $id_pertemuan }}]</h3>
             </div>
             <div class="card-body">
                 <div style="display: flex; gap: 50px; align-items: flex-start;">
@@ -39,49 +39,50 @@
                     @if ($info)
                     <table class="table table-sm">
                         <tr>
-                        <th style="width: 150px;">NIK</th>
-                        <td>: {{ $info->dosen->nik }}</td>
+                            <th style="width: 150px;">NIK</th>
+                            <td>: {{ $info->dosen->nik }}</td>
                         </tr>
                         <tr>
-                        <th>Nama</th>
-                        <td>: {{ $info->dosen->nama }}</td>
+                            <th>Nama</th>
+                            <td>: {{ $info->dosen->nama }}</td>
                         </tr>
                         <tr>
-                        <th>Mata Kuliah</th>
-                        <td>: {{ $info->makul->nama_makul }}</td>
+                            <th>Mata Kuliah</th>
+                            <td>: {{ $info->makul->nama_makul }}</td>
                         </tr>
                         <tr>
-                        <th>Judul Pertemuan</th>
-                        <td>: {{ $pertemuan->judul_pertemuan }}</td>
+                            <th>Judul Pertemuan</th>
+                            <td>: {{ $pertemuan->judul_pertemuan }}</td>
                         </tr>
                         <tr>
-                        <th>Kelas</th>
-                        <td>: {{ $info->nama_kelas }}</td>
+                            <th>Kelas</th>
+                            <td>: {{ $info->nama_kelas }}</td>
                         </tr>
                         <tr>
-                        <th>Jurusan</th>
-                        <td>: {{ $info->jurusan->nama_jurusan }}</td>
+                            <th>Jurusan</th>
+                            <td>: {{ $info->jurusan->nama_jurusan }}</td>
                         </tr>
                         <tr>
-                        <th>Hari</th>
-                        <td>: {{ \Carbon\Carbon::parse($pertemuan->tanggal)->translatedFormat('l') }}</td>
+                            <th>Hari</th>
+                            <td>: </td>
                         </tr>
                         <tr>
-                        <th>Tanggal</th>
-                        <td>: {{ $pertemuan->tanggal }}</td>
+                            <th>Tanggal</th>
+                            <td>: {{ $pertemuan->tanggal }}</td>
                         </tr>
                         <tr>
-                        <th>Pertemuan ke</th>
-                        <td>: {{ $pertemuan->pertemuan_ke }}</td>
+                            <th>Pertemuan ke</th>
+                            <td>: {{ $pertemuan->pertemuan_ke }}</td>
                         </tr>
                     </table>
                     @endif
 
                     <div class="text-center">
-                        <div style="border: 1px solid blue;">
-                            <img src="" alt="QR Code" width="200">
-                        </div>
                         <div>
+                            {{-- <img src="" alt="QR Code" width="200"> --}}
+                            {{ QrCode::size(180)->generate($id_pertemuan) }}
+                        </div>
+                        <div class="mt-2">
                             Scan QR untuk melakukan presensi
                         </div><br>
                         <p id="countdown_timer" class="text-bold text-red">Presensi telah ditutup</p>
@@ -94,6 +95,9 @@
     <div class="col-md-12">
         <div class="card card-success card-outline">
             <div class="card-body">
+                <a href="{{ route('admin.kelas_makul.pertemuan', ['kode_kelas' => $info->kode_kelas]) }}" class="btn btn-default mb-2">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </a>
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr class="text-center">
@@ -160,7 +164,7 @@
                             <option value="alpha">Alpha</option>
                         </select>
                     </div>
-
+                </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
                     <button type="submit" name="btn_edit_mhs" class="btn btn-primary">
@@ -191,4 +195,35 @@
         modal.find('#form-edit-kehadiran').attr('action', actionUrl);
     })
 </script>
+
+{{-- TIMER --}}
+@if ($status_pertemuan == '1')
+    <script>
+    var countDownDate = new Date().getTime() + (1 * 60 * 1000);
+
+    var x = setInterval(function() {
+        // Tanggal dan waktu hari ini
+        var now = new Date().getTime();
+
+        // Jarak / hasil waktunya? Misal sisa 5 detik
+        var distance = countDownDate - now;
+
+        // Hitung menit n detiknya
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Tampilin hasilnya di elemen (kalo aku pke <p>) yang pake id countdown_timer
+        document.getElementById("countdown_timer").innerHTML = minutes + "menit " + seconds + "detik";
+
+        // Kalo timer udah habis (dibawh 0)
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("countdown_timer").innerHTML = "Waktu Habis!";
+
+            window.location.href = "{{ route('admin.presensi.ubah_status', $id_pertemuan) }}";
+        }
+    }, 1000);
+    </script>
+@endif
+
 @endpush

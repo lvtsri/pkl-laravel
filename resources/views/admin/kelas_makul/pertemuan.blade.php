@@ -39,7 +39,7 @@
 
         <div class="card card-success card-outline">
             <div class="card-body">
-                <a href="" class="btn btn-default mb-2">
+                <a href="{{ route('admin.kelas_makul') }}" class="btn btn-default mb-2">
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal-tambah">

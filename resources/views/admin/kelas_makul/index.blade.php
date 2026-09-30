@@ -62,29 +62,31 @@
               <td class="text-left">{{ $km->jurusan->nama_jurusan }}</td>
               <td class="text-left">{{ $km->dosen->nama }}</td>
               <td>
-                <a href="{{ route('admin.kelas_makul.pertemuan', ['kode_kelas' => $km->kode_kelas]) }}" class="btn btn-success btn-sm">
-                  <i class="fas fa-qrcode"></i>
-                </a>
-                <a href="{{ route('admin.detail_kelas') }}" class="btn btn-primary btn-sm">
-                  <i class="fas fa-eye"></i>
-                </a>
-                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit"
-                  data-kode_kelas = "{{ $km->kode_kelas }}"
-                  data-kode_akd = "{{ $km->kode_akd }}"
-                  data-kode_makul = "{{ $km->kode_makul }}"
-                  data-kode_jurusan = "{{ $km->kode_jurusan }}"
-                  data-nik = "{{ $km->nik }}"
-                  data-nama_kelas = "{{ $km->nama_kelas }}"
-                >
-                  <i class="fas fa-pen"></i>
-                </button>
-                <form action="{{ route('admin.kelas_makul.destroy', $km->kode_kelas) }}" method="post">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Data kelas yang dipilih akan dihapus. Lanjutkan?')">
-                    <i class="fas fa-trash"></i>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px;">
+                  <a href="{{ route('admin.kelas_makul.pertemuan', ['kode_kelas' => $km->kode_kelas]) }}" class="btn btn-success btn-sm">
+                    <i class="fas fa-qrcode"></i>
+                  </a>
+                  <a href="{{ route('admin.detail_kelas', ['kode_kelas' => $km->kode_kelas]) }}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-eye"></i>
+                  </a>
+                  <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit"
+                    data-kode_kelas = "{{ $km->kode_kelas }}"
+                    data-kode_akd = "{{ $km->kode_akd }}"
+                    data-kode_makul = "{{ $km->kode_makul }}"
+                    data-kode_jurusan = "{{ $km->kode_jurusan }}"
+                    data-nik = "{{ $km->nik }}"
+                    data-nama_kelas = "{{ $km->nama_kelas }}"
+                  >
+                    <i class="fas fa-pen"></i>
                   </button>
-                </form>
+                  <form action="{{ route('admin.kelas_makul.destroy', $km->kode_kelas) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Data kelas yang dipilih akan dihapus. Lanjutkan?')">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+                </div>
               </td>
               <td>
                 <a href="" class="btn btn-danger btn-sm">
