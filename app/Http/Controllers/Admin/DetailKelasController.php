@@ -67,4 +67,17 @@ class DetailKelasController extends Controller
             return redirect()->back()->with('error', 'Gagal menghapus data mahasiswa');
         }
     }
+
+    public function exportPdf($kode_kelas){
+        $detail_kelas = DetailKelasMakul::with(['mahasiswa'])->where('kode_kelas', $kode_kelas)->get();
+
+        $data = [
+            'title' => 'Data Pertemuan',
+            'detail_kelas' => $detail_kelas,
+        ];
+
+        $pdf = Pdf::loadView('admin.detail_kelas.pdf', $data);
+
+        return $pdf->stream('data_detail_kelas.pdf');
+    }
 }

@@ -12,6 +12,7 @@ use App\Models\Dosen;
 use App\Models\Pertemuan;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf; 
 
 class PertemuanController extends Controller
 {
@@ -100,5 +101,18 @@ class PertemuanController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Gagal menghapus pertemuan');
         }
+    }
+
+    public function exportPdf($kode_kelas){
+        $pertemuan = Pertemuan::where('kode_kelas', $kode_kelas)->get();
+
+        $data = [
+            'title' => 'Data Pertemuan',
+            'pertemuan' => $pertemuan,
+        ];
+
+        $pdf = Pdf::loadView('admin.kelas_makul.pdf_pertemuan', $data);
+
+        return $pdf->stream('data_pertemuan.pdf');
     }
 }

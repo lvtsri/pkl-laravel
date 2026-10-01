@@ -53,7 +53,7 @@
                 <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal-tambah">
                     <i class="fas fa-plus"></i> Tambah Mahasiswa
                 </button>
-                <a href="" type="button" class="btn btn-danger mb-2" target="_blank">
+                <a href="{{ route('admin.detail_kelas.pdf', ['kode_kelas' => $info->kode_kelas]) }}" type="button" class="btn btn-danger mb-2" target="_blank">
                     <i class="fas fa-file-pdf"></i>
                     Ekspor Data
                 </a>

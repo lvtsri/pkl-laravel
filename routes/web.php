@@ -77,6 +77,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/kelas-makul/pertemuan/{kode_kelas}', [PertemuanController::class, 'store'])->name('admin.kelas_makul.pertemuan.store');
     Route::put('/kelas-makul/pertemuan/{id}', [PertemuanController::class, 'update'])->name('admin.kelas_makul.pertemuan.update');
     Route::delete('/kelas-makul/pertemuan/{id}', [PertemuanController::class, 'destroy'])->name('admin.kelas_makul.pertemuan.destroy');
+    Route::get('/kelas-makul/pertemuan/{kode_kelas}/pdf', [PertemuanController::class, 'exportPdf'])->name('admin.kelas_makul.pdf_pertemuan');
 
     Route::get('kelas-makul/presensi/{id_pertemuan}', [PresensiController::class, 'index'])->name('admin.kelas_makul.presensi');
     Route::put('/kelas-makul/presensi/{id}/toggle', [PresensiController::class, 'toggleStatus'])->name('admin.kelas_makul.presensi.toggle');
@@ -87,7 +88,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/detail-kelas/{kode_kelas}', [DetailKelasController::class, 'index'])->name('admin.detail_kelas');
     Route::post('/detail-kelas/{kode_kelas}', [DetailKelasController::class, 'store'])->name('admin.detail_kelas.store');
     Route::delete('/detail-kelas/{id}', [DetailKelasController::class, 'destroy'])->name('admin.detail_kelas.destroy');
-    Route::get('/detail-kelas/pdf', [DetailKelasController::class, 'exportPdf'])->name('admin.detail_kelas.pdf');
+    Route::get('/detail-kelas/{kode_kelas}/pdf', [DetailKelasController::class, 'exportPdf'])->name('admin.detail_kelas.pdf');
 
     // Akademik
     Route::get('/akademik', [AkademikController::class, 'index'])->name('admin.akademik');
