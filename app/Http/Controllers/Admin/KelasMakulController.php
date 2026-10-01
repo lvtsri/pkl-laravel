@@ -9,6 +9,7 @@ use App\Models\Jurusan;
 use App\Models\Dosen;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class KelasMakulController extends Controller
 {
@@ -107,5 +108,18 @@ class KelasMakulController extends Controller
         } catch (\Throwable $th) {
             return redirect()->route('admin.kelas_makul')->with('error', 'Gagal menghapus kelas');
         }
+    }
+
+    public function exportPdf(){
+        $kelas_mk = KelasMakul::with(['akademik', 'makul', 'jurusan', 'dosen'])->get();
+
+        $data = [
+            'title' => 'Data Seluruh Kelas Makul',
+            'kelas_mk' => $kelas_mk,
+        ];
+
+        $pdf = Pdf::loadView('admin.kelas_makul.pdf', $data);
+        
+        return $pdf->stream('data_kelas_makul.pdf');
     }
 }

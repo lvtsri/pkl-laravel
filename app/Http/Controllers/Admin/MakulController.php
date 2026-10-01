@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Makul;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class MakulController extends Controller
 {
@@ -88,5 +89,18 @@ class MakulController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('admin.makul')->with('error', "Gagal menghapus data makul");
         }
+    }
+
+    public function exportPdf(){
+        $makul = Makul::all();
+
+        $data = [
+            'title' => 'Data Mata Kuliah',
+            'makul' => $makul,
+        ];
+
+        $pdf = Pdf::loadView('admin.makul.pdf', $data);
+        
+        return $pdf->stream('data_jurusan.pdf');
     }
 }

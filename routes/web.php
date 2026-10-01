@@ -40,32 +40,38 @@ Route::prefix('admin')->group(function () {
     Route::post('/dosen', [DosenController::class, 'store'])->name('admin.dosen.store');
     Route::put('/dosen/{nik}', [DosenController::class, 'update'])->name('admin.dosen.update');
     Route::delete('/dosen/{nik}', [DosenController::class, 'destroy'])->name('admin.dosen.destroy');
-    Route::get('/dosen/excel', [DosenController::class, 'exportExcel'])->name('admin.dosen.excel');
+    Route::get('/dosen/export-excel', [DosenController::class, 'exportExcel'])->name('admin.dosen.export_excel');
+    Route::post('/dosen/import-excel', [DosenController::class, 'importExcel'])->name('admin.dosen.import_excel');
     Route::get('/dosen/pdf', [DosenController::class, 'exportPdf'])->name('admin.dosen.pdf');
+    
 
     // Mahasiswa
     Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('admin.mahasiswa');
     Route::post('/mahasiswa', [MahasiswaController::class, 'store'])->name('admin.mahasiswa.store');
     Route::put('/mahasiswa/{nim}', [MahasiswaController::class, 'update'])->name('admin.mahasiswa.update');
     Route::delete('/mahasiswa/{nim}', [MahasiswaController::class, 'destroy'])->name('admin.mahasiswa.destroy');
+    Route::get('/mahasiswa/pdf', [MahasiswaController::class, 'exportPdf'])->name('admin.mahasiswa.pdf');
 
     // Jurusan
     Route::get('/jurusan', [JurusanController::class, 'index'])->name('admin.jurusan');
     Route::post('/jurusan', [JurusanController::class, 'store'])->name('admin.jurusan.store');
     Route::put('/jurusan/{id}', [JurusanController::class, 'update'])->name('admin.jurusan.update');
     Route::delete('/jurusan/{kode_jurusan}', [JurusanController::class, 'destroy'])->name('admin.jurusan.destroy');
+    Route::get('/jurusan/pdf', [JurusanController::class, 'exportPdf'])->name('admin.jurusan.pdf');
 
     // Mata Kuliah (Makul)
     Route::get('/makul', [MakulController::class, 'index'])->name('admin.makul');
     Route::post('/makul', [MakulController::class, 'store'])->name('admin.makul.store');
     Route::put('/makul/{kode_makul}', [MakulController::class, 'update'])->name('admin.makul.update');
     Route::delete('/makul/{kode_makul}', [MakulController::class, 'destroy'])->name('admin.makul.destroy');
+    Route::get('/makul/pdf', [MakulController::class, 'exportPdf'])->name('admin.makul.pdf');
 
     // Kelas Makul
     Route::get('/kelas-makul', [KelasMakulController::class, 'index'])->name('admin.kelas_makul');
     Route::post('/kelas-makul', [KelasMakulController::class, 'store'])->name('admin.kelas_makul.store');
     Route::put('/kelas-makul/{kode_kelas}', [KelasMakulController::class, 'update'])->name('admin.kelas_makul.update');
     Route::delete('/kelas-makul/{kode_kelas}', [KelasMakulController::class, 'destroy'])->name('admin.kelas_makul.destroy');
+    Route::get('/kelas-makul/pdf', [KelasMakulController::class, 'exportPdf'])->name('admin.kelas_makul.pdf');
 
     Route::get('/kelas-makul/pertemuan/{kode_kelas}', [PertemuanController::class, 'index'])->name('admin.kelas_makul.pertemuan');
     Route::post('/kelas-makul/pertemuan/{kode_kelas}', [PertemuanController::class, 'store'])->name('admin.kelas_makul.pertemuan.store');
@@ -81,12 +87,14 @@ Route::prefix('admin')->group(function () {
     Route::get('/detail-kelas/{kode_kelas}', [DetailKelasController::class, 'index'])->name('admin.detail_kelas');
     Route::post('/detail-kelas/{kode_kelas}', [DetailKelasController::class, 'store'])->name('admin.detail_kelas.store');
     Route::delete('/detail-kelas/{id}', [DetailKelasController::class, 'destroy'])->name('admin.detail_kelas.destroy');
+    Route::get('/detail-kelas/pdf', [DetailKelasController::class, 'exportPdf'])->name('admin.detail_kelas.pdf');
 
     // Akademik
     Route::get('/akademik', [AkademikController::class, 'index'])->name('admin.akademik');
     Route::post('/akademik', [AkademikController::class, 'store'])->name('admin.akademik.store');
     Route::put('/akademik/{kode_akd}', [AkademikController::class, 'update'])->name('admin.akademik.update');
     Route::delete('/akademik/{kode_akd}', [AkademikController::class, 'destroy'])->name('admin.akademik.destroy');
+    Route::get('/akademik/pdf', [AkademikController::class, 'exportPdf'])->name('admin.akademik.pdf');
 
     // Password / Ganti Sandi Admin
     Route::get('/password', [PasswordController::class, 'index'])->name('admin.password');

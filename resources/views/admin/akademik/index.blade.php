@@ -11,6 +11,10 @@
         <i class="fas fa-plus"></i>
         Tambah Data
       </button>
+      <a href="{{ route('admin.akademik.pdf') }}" class="btn btn-danger mb-2" target="_blank">
+        <i class="fas fa-file-pdf"></i>
+        Ekspor Data
+      </a>
 
       <table id="example1" class="table table-bordered table-striped text-center">
         <thead>
@@ -47,21 +51,23 @@
                 @endif
               </td>
               <td>
-                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit"
-                  data-kode_akd = "{{ $a->kode_akd }}"
-                  data-semester = "{{ $a->semester }}"
-                  data-tahun = "{{ $a->tahun }}"
-                  data-is_active = "{{ $a->is_active }}"
-                >
-                  <i class="fas fa-pen"></i>
-                </button>
-                <form action="{{ route('admin.akademik.destroy', $a->kode_akd) }}" method="POST">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Data periode yang dipilih akan dihapus. Lanjutkan?')">
-                    <i class="fas fa-trash"></i>
+                <div style="display: flex; gap: 3px; justify-content: center;">
+                  <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit"
+                    data-kode_akd = "{{ $a->kode_akd }}"
+                    data-semester = "{{ $a->semester }}"
+                    data-tahun = "{{ $a->tahun }}"
+                    data-is_active = "{{ $a->is_active }}"
+                  >
+                    <i class="fas fa-pen"></i>
                   </button>
-                </form>
+                  <form action="{{ route('admin.akademik.destroy', $a->kode_akd) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Data periode yang dipilih akan dihapus. Lanjutkan?')">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+                </div>
               </td>
             </tr>
           @empty

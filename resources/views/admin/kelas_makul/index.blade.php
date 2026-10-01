@@ -20,11 +20,15 @@
           </select>
         </div>
       </div>
-      <div class="col-3">
+      <div class="col-5">
         <button type="submit" name="btn_filter" class="btn btn-primary mb-2">
           <i class="fas fa-search"></i>
           Tampilkan Data
         </button>
+        <a href="{{ route('admin.kelas_makul.pdf') }}" class="btn btn-danger mb-2" target="_blank">
+          <i class="fas fa-file-pdf"></i>
+          Ekspor Data
+        </a>
       </div>
     </div>
   </form>

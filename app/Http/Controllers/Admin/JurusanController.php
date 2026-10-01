@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Jurusan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class JurusanController extends Controller
 {
@@ -78,5 +79,18 @@ class JurusanController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('admin.jurusan')->with('error', 'Gagal menghapus data jurusan');
         }
+    }
+
+    public function exportPdf(){
+        $jurusan = Jurusan::all();
+
+        $data = [
+            'title' => 'Data Jurusan',
+            'jurusan' => $jurusan,
+        ];
+
+        $pdf = Pdf::loadView('admin.jurusan.pdf', $data);
+
+        return $pdf->stream('data_jurusan.pdf');
     }
 }

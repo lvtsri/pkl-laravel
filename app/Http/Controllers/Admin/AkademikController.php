@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Akademik;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AkademikController extends Controller
 {
@@ -86,5 +87,18 @@ class AkademikController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('admin.akademik')->with('error', "Gagal menghapus data periode akademik");
         }
+    }
+
+    public function exportPdf(){
+        $akademik = Akademik::all();
+
+        $data = [
+            'title' => 'Data Periode Akademik',
+            'akademik' => $akademik,
+        ];
+
+        $pdf = Pdf::loadView('admin.akademik.pdf', $data);
+
+        return $pdf->stream('data_akademik.pdf');
     }
 }

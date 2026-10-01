@@ -11,6 +11,10 @@
         <i class="fas fa-plus"></i>
         Tambah Data
       </button>
+      <a href="{{ route('admin.jurusan.pdf') }}" class="btn btn-danger mb-2" target="_blank">
+        <i class="fas fa-file-pdf"></i>
+        Ekspor Data
+      </a>
 
       <table id="example1" class="table table-bordered table-striped text-center">
         <thead>

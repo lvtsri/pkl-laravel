@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Mahasiswa;
 use App\Models\Pengguna;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class MahasiswaController extends Controller
 {
@@ -94,5 +95,19 @@ class MahasiswaController extends Controller
         } catch (\Throwable $th) {
             return redirect()->route('admin.mahasiswa')->with('error', 'Gagal menghapus data mahasiswa');
         }
+    }
+
+    public function exportPdf()
+    {
+        $mahasiswa = Mahasiswa::get();
+    
+        $data = [
+            'title' => 'Data Mahasiswa',
+            'mahasiswa' => $mahasiswa,
+        ]; 
+        
+        $pdf = Pdf::loadView('admin.mahasiswa.pdf', $data);
+    
+        return $pdf->stream('data_mahasiswa.pdf');
     }
 }

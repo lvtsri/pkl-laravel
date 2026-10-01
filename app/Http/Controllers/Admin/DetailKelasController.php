@@ -11,6 +11,7 @@ use App\Models\Jurusan;
 use App\Models\Dosen;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DetailKelasController extends Controller
 {

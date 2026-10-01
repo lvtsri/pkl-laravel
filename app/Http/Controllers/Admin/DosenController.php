@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\DosenExport;
 use App\Http\Controllers\Controller;
+use App\Imports\DosenImport;
 use App\Models\Dosen;
 use App\Models\Pengguna;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DosenController extends Controller
 {
@@ -95,5 +99,37 @@ class DosenController extends Controller
         } catch (\Throwable $th) {
             return redirect()->route('admin.dosen')->with('error', 'Gagal menghapus data dosen');
         }
+    }
+
+    // ` PDF `
+    public function exportPdf()
+    {
+        $dosen = Dosen::get();
+    
+        $data = [
+            'title' => 'Data Dosen',
+            // 'date' => date('m/d/Y'),
+            'dosen' => $dosen,
+        ]; 
+        
+        $pdf = Pdf::loadView('admin.dosen.pdf', $data);
+    
+        // return $pdf->download('data_dosen.pdf');
+        return $pdf->stream('data_dosen.pdf');
+    }
+
+    // ` EXCEL `
+    public function exportExcel(){
+        return Excel::download(new DosenExport, 'Data_Dosen.xlsx');
+    }
+
+    public function importExcel(Request $request){
+        $request->validate([
+            'file_excel' => 'required',
+        ]);
+
+        Excel::import(new DosenImport, $request->file('file_excel'));
+        
+        return back()->with('success', 'Data dosen telah berhasil diimpor dengan format excel');
     }
 }

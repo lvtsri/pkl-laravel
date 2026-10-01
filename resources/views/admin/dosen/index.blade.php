@@ -11,6 +11,18 @@
         <i class="fas fa-plus"></i>
         Tambah Data
       </button>
+      <a href="{{ route('admin.dosen.pdf') }}" class="btn btn-danger mb-2" target="_blank">
+        <i class="fas fa-file-pdf"></i>
+        Ekspor Data
+      </a>
+      <a href="{{ route('admin.dosen.export_excel') }}" class="btn btn-success mb-2" target="_blank">
+        <i class="fas fa-file-excel"></i>
+        Ekspor Data
+      </a>
+      <button class="btn btn-warning mb-2" data-toggle="modal" data-target="#modal-impor">
+        <i class="fas fa-file-excel"></i>
+        Impor Data
+      </button>
 
       <table id="example1" class="table table-bordered table-striped text-center">
         <thead>
@@ -196,6 +208,39 @@
     </div>
     <!-- /.modal-dialog -->
   </div>
+
+  <!-- MODAL IMPOR -->
+  <div class="modal fade" id="modal-impor">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Impor Data Dosen</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="{{ route('admin.dosen.import_excel') }}" method="post" enctype="multipart/form-data">
+          @csrf
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="file">Upload File</label>
+              <input type="file" class="form-control" name="file_excel" required>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            <button type="submit" name="btn_impor" class="btn btn-success">
+              <!-- <i class="fas fa-plus"></i> -->
+              Impor Data
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
 @endsection
 
 @push('scripts')
