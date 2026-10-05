@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 
-// Import Controller Admin
-use App\Http\Controllers\Admin\DashboardController;
+// Controller Admin
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\DosenController;
 use App\Http\Controllers\Admin\MahasiswaController;
@@ -16,6 +16,10 @@ use App\Http\Controllers\Admin\PertemuanController;
 use App\Http\Controllers\Admin\PresensiController;
 use App\Http\Controllers\Admin\AkademikController;
 use App\Http\Controllers\Admin\PasswordController;
+// Controller Mhs
+use App\Http\Controllers\Mahasiswa\DashboardController as MhsDashboardController;
+use App\Http\Controllers\Mahasiswa\KelasMakulController as MhsKelasMakulController;
+use App\Http\Controllers\Mahasiswa\PasswordController as MhsPasswordController;
 
 // ================= AUTH & PIN =================
 Route::get('/', [LoginController::class, 'showLogin'])->name('login');
@@ -23,11 +27,10 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.process');
 Route::post('/verify-pin', [LoginController::class, 'verifyPin'])->name('pin.verify');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-
 // ================= AREA ADMIN =================   
 Route::prefix('admin')->group(function () {
     // Dashboard Beranda
-    Route::get('/', [DashboardController::class, 'index'])->name('admin');
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('admin');
 
     // Pengguna
     Route::get('/pengguna', [PenggunaController::class, 'index'])->name('admin.pengguna');
@@ -109,12 +112,17 @@ Route::prefix('admin')->group(function () {
     Route::put('/password/update', [PasswordController::class, 'update'])->name('admin.password.update');
 });
 
-
-// ================= DOSEN & MAHASISWA (Sementara) =================
+// DOSEN
 Route::get('/dosen', function () {
     return view('dosen.index');
 })->name('dosen');
 
-Route::get('/mahasiswa', function () {
-    return view('mahasiswa.index');
-})->name('mahasiswa');
+// MHS
+Route::prefix('mahasiswa')->group(function () {
+    Route::get('/', [MhsDashboardController::class, 'index'])->name('mahasiswa');
+    
+    Route::get('/kelas-makul', [MhsKelasMakulController::class, 'index'])->name('mahasiswa.kelas_makul');
+    Route::post('/kelas-makul/scan', [MhsKelasMakulController::class, 'scan'])->name('mahasiswa.kelas_makul.scan');
+
+    Route::get('/password', [MhsPasswordController::class, 'index'])->name('mahasiswa.password');
+});

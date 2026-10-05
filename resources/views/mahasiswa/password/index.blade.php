@@ -1,9 +1,9 @@
 @extends('layouts.mahasiswa')
 
 @section('content-header')
-  <h1>Beranda</h1><hr>
+  <h1>Ganti Password</h1><hr>
 @endsection
 
 @section('content')
-  <p>Selamat datang, pengguna {{ session('nama') }}!</p>
+  <p>Ini halaman ganti pass - mahasiswa</p>
 @endsection
