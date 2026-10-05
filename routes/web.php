@@ -16,6 +16,13 @@ use App\Http\Controllers\Admin\PertemuanController;
 use App\Http\Controllers\Admin\PresensiController;
 use App\Http\Controllers\Admin\AkademikController;
 use App\Http\Controllers\Admin\PasswordController;
+// Controller Dosen
+use App\Http\Controllers\Dosen\DashboardController as DosenDashboardController;
+use App\Http\Controllers\Dosen\KelasMakulController as DosenKelasMakulController;
+use App\Http\Controllers\Dosen\PertemuanController as DosenPertemuanController;
+use App\Http\Controllers\Dosen\DetailKelasController as DosenDetailKelasController;
+use App\Http\Controllers\Dosen\PresensiController as DosenPresensiController;
+use App\Http\Controllers\Dosen\PasswordController as DosenPasswordController;
 // Controller Mhs
 use App\Http\Controllers\Mahasiswa\DashboardController as MhsDashboardController;
 use App\Http\Controllers\Mahasiswa\KelasMakulController as MhsKelasMakulController;
@@ -79,14 +86,14 @@ Route::prefix('admin')->group(function () {
     Route::delete('/kelas-makul/{kode_kelas}', [KelasMakulController::class, 'destroy'])->name('admin.kelas_makul.destroy');
     Route::get('/kelas-makul/pdf', [KelasMakulController::class, 'exportPdf'])->name('admin.kelas_makul.pdf');
     Route::get('/kelas-makul/export-excel', [KelasMakulController::class, 'exportExcel'])->name('admin.kelas_makul.export_excel');
-
+    // Pertemuan
     Route::get('/kelas-makul/pertemuan/{kode_kelas}', [PertemuanController::class, 'index'])->name('admin.kelas_makul.pertemuan');
     Route::post('/kelas-makul/pertemuan/{kode_kelas}', [PertemuanController::class, 'store'])->name('admin.kelas_makul.pertemuan.store');
     Route::put('/kelas-makul/pertemuan/{id}', [PertemuanController::class, 'update'])->name('admin.kelas_makul.pertemuan.update');
     Route::delete('/kelas-makul/pertemuan/{id}', [PertemuanController::class, 'destroy'])->name('admin.kelas_makul.pertemuan.destroy');
     Route::get('/kelas-makul/pertemuan/{kode_kelas}/pdf', [PertemuanController::class, 'exportPdf'])->name('admin.kelas_makul.pdf_pertemuan');
     Route::get('/kelas-makul/pertemuan/{kode_kelas}/export-excel', [PertemuanController::class, 'exportExcel'])->name('admin.kelas_makul.pertemuan.export_excel');
-
+    // Presensi
     Route::get('kelas-makul/presensi/{id_pertemuan}', [PresensiController::class, 'index'])->name('admin.kelas_makul.presensi');
     Route::put('/kelas-makul/presensi/{id}/toggle', [PresensiController::class, 'toggleStatus'])->name('admin.kelas_makul.presensi.toggle');
     Route::put('/kelas-makul/presensi/kehadiran/{id}', [PresensiController::class, 'ubahKehadiran'])->name('admin.kelas_makul.presensi.kehadiran');
@@ -113,16 +120,35 @@ Route::prefix('admin')->group(function () {
 });
 
 // DOSEN
-Route::get('/dosen', function () {
-    return view('dosen.index');
-})->name('dosen');
+Route::prefix('dosen')->group(function () {
+    Route::get('/', [DosenDashboardController::class, 'index'])->name('dosen');
+
+    // Kelas mk
+    Route::get('/kelas-makul', [DosenKelasMakulController::class, 'index'])->name('dosen.kelas_makul');
+    // Pertemuan
+    Route::get('/kelas-makul/pertemuan/{kode_kelas}', [DosenPertemuanController::class, 'index'])->name('dosen.kelas_makul.pertemuan');
+    Route::post('/kelas-makul/pertemuan/{kode_kelas}', [DosenPertemuanController::class, 'store'])->name('dosen.kelas_makul.pertemuan.store');
+    // Presensi
+    Route::get('kelas-makul/presensi/{id_pertemuan}', [DosenPresensiController::class, 'index'])->name('dosen.kelas_makul.presensi');
+    Route::put('/kelas-makul/presensi/{id}/toggle', [DosenPresensiController::class, 'toggleStatus'])->name('dosen.kelas_makul.presensi.toggle');
+    Route::put('/kelas-makul/presensi/kehadiran/{id}', [DosenPresensiController::class, 'ubahKehadiran'])->name('dosen.kelas_makul.presensi.kehadiran');
+    Route::get('/kelas-makul/presensi/ubah-status/{id_pertemuan}', [DosenPresensiController::class, 'ubahStatus'])->name('dosen.presensi.ubah_status');
+
+    // Detail kelas
+    Route::get('/detail-kelas/{kode_kelas}', [DosenDetailKelasController::class, 'index'])->name('dosen.detail_kelas');
+
+    // Password
+    Route::get('/password', [DosenPasswordController::class, 'index'])->name('dosen.password');
+});
 
 // MHS
 Route::prefix('mahasiswa')->group(function () {
     Route::get('/', [MhsDashboardController::class, 'index'])->name('mahasiswa');
     
+    // Kelas makul
     Route::get('/kelas-makul', [MhsKelasMakulController::class, 'index'])->name('mahasiswa.kelas_makul');
     Route::post('/kelas-makul/scan', [MhsKelasMakulController::class, 'scan'])->name('mahasiswa.kelas_makul.scan');
 
+    // Password
     Route::get('/password', [MhsPasswordController::class, 'index'])->name('mahasiswa.password');
 });

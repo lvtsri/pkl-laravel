@@ -53,7 +53,7 @@ class PertemuanController extends Controller
             'kode_kelas' => $kode_kelas,
             'tanggal' => trim($request->tanggal),
             'judul_pertemuan' => trim($request->judul_pertemuan),
-            'status_pertemuan' => '0',
+            'status_pertemuan' => '1',
             'pertemuan_ke' => $pertemuan_ke,
         ]);
 
@@ -67,7 +67,8 @@ class PertemuanController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Pertemuan telah berhasil ditambahkan!');
+        // return redirect()->back()->with('success', 'Pertemuan telah berhasil ditambahkan!');
+        return redirect()->route('admin.kelas_makul.presensi', ['id_pertemuan' => $pertemuan->id])->with('success', 'Data pertemuan telah berhasil ditambahkan!');
     }
 
     public function update(Request $request){

@@ -11,11 +11,8 @@ use App\Models\Presensi;
 class KelasMakulController extends Controller
 {
     public function index(){
-        $user = Auth::user();
-
         return view('mahasiswa.kelas_makul.index', [
             'hal' => 'data_kelas_makul',
-            'user' => $user,
         ]);
     }
 
