@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\JurusanExport;
 use App\Models\Jurusan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 class JurusanController extends Controller
 {
@@ -81,6 +83,7 @@ class JurusanController extends Controller
         }
     }
 
+    // PDF
     public function exportPdf(){
         $jurusan = Jurusan::all();
 
@@ -92,5 +95,10 @@ class JurusanController extends Controller
         $pdf = Pdf::loadView('admin.jurusan.pdf', $data);
 
         return $pdf->stream('data_jurusan.pdf');
+    }
+
+    // EXCEL
+    public function exportExcel(){
+        return Excel::download(new JurusanExport, 'Data_Jurusan.xlsx');
     }
 }

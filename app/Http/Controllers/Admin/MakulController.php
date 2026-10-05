@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\MakulExport;
 use App\Models\Makul;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MakulController extends Controller
 {
@@ -91,6 +93,7 @@ class MakulController extends Controller
         }
     }
 
+    // PDF
     public function exportPdf(){
         $makul = Makul::all();
 
@@ -102,5 +105,10 @@ class MakulController extends Controller
         $pdf = Pdf::loadView('admin.makul.pdf', $data);
         
         return $pdf->stream('data_jurusan.pdf');
+    }
+
+    // EXCEL
+    public function exportExcel(){
+        return Excel::download(new MakulExport, 'Data_Makul.xlsx');
     }
 }

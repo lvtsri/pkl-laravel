@@ -49,6 +49,10 @@
                     <i class="fas fa-file-pdf"></i>
                     Ekspor Data Presensi
                 </a>
+                <a href="{{ route('admin.kelas_makul.pertemuan.export_excel', ['kode_kelas' => $info->kode_kelas]) }}" type="button" class="btn btn-success mb-2" target="_blank">
+                    <i class="fas fa-file-excel"></i>
+                    Ekspor Data
+                </a>
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr class="text-center">

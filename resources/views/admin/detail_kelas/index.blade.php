@@ -57,6 +57,10 @@
                     <i class="fas fa-file-pdf"></i>
                     Ekspor Data
                 </a>
+                <a href="{{ route('admin.detail_kelas.export_excel', ['kode_kelas' => $info->kode_kelas]) }}" type="button" class="btn btn-success mb-2" target="_blank">
+                    <i class="fas fa-file-excel"></i>
+                    Ekspor Data
+                </a>
                 <?php
                     $no = 1;
                 ?>

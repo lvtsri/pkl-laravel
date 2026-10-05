@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\KelasMakulExport;
 use App\Models\KelasMakul;
 use App\Models\Akademik;
 use App\Models\Makul;
@@ -10,6 +11,7 @@ use App\Models\Dosen;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KelasMakulController extends Controller
 {
@@ -110,6 +112,7 @@ class KelasMakulController extends Controller
         }
     }
 
+    // PDF
     public function exportPdf(){
         $kelas_mk = KelasMakul::with(['akademik', 'makul', 'jurusan', 'dosen'])->get();
 
@@ -121,5 +124,10 @@ class KelasMakulController extends Controller
         $pdf = Pdf::loadView('admin.kelas_makul.pdf', $data);
         
         return $pdf->stream('data_kelas_makul.pdf');
+    }
+
+    // EXCEL
+    public function exportExcel(){
+        return Excel::download(new KelasMakulExport, 'Data_Kelas_Makul.xlsx');
     }
 }

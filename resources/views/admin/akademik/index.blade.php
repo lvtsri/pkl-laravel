@@ -15,6 +15,10 @@
         <i class="fas fa-file-pdf"></i>
         Ekspor Data
       </a>
+      <a href="{{ route('admin.akademik.export_excel') }}" class="btn btn-success mb-2" target="_blank">
+        <i class="fas fa-file-excel"></i>
+        Ekspor Data
+      </a>
 
       <table id="example1" class="table table-bordered table-striped text-center">
         <thead>

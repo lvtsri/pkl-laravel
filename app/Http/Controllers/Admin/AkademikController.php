@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\AkademikExport;
 use App\Models\Akademik;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AkademikController extends Controller
 {
@@ -89,6 +91,7 @@ class AkademikController extends Controller
         }
     }
 
+    // PDF
     public function exportPdf(){
         $akademik = Akademik::all();
 
@@ -100,5 +103,10 @@ class AkademikController extends Controller
         $pdf = Pdf::loadView('admin.akademik.pdf', $data);
 
         return $pdf->stream('data_akademik.pdf');
+    }
+
+    // EXCEL
+    public function exportExcel(){
+        return Excel::download(new AkademikExport, 'Data_Periode_Akademik.xlsx');
     }
 }

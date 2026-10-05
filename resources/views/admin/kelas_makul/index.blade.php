@@ -29,6 +29,10 @@
           <i class="fas fa-file-pdf"></i>
           Ekspor Data
         </a>
+        <a href="{{ route('admin.kelas_makul.export_excel') }}" class="btn btn-success mb-2" target="_blank">
+          <i class="fas fa-file-excel"></i>
+          Ekspor Data
+        </a>
       </div>
     </div>
   </form>

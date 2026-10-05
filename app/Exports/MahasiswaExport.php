@@ -2,24 +2,24 @@
 
 namespace App\Exports;
 
-use App\Models\Dosen;
+use App\Models\Mahasiswa;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class DosenExport implements FromCollection, WithHeadings
+class MahasiswaExport implements FromCollection, WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        $dosen = Dosen::select("nik", "nama", "kontak", "email", "kelamin")->get();
+        $mahasiswa = Mahasiswa::select("nim", "nama", "kontak", "email", "kelamin")->get();
         $no = 1;
 
-        return $dosen->map(function ($item) use (&$no){
+        return $mahasiswa->map(function ($item) use (&$no){
             return [
                 'no' => $no++,
-                'nik' => $item->nik,
+                'nim' => $item->nim,
                 'nama' => $item->nama,
                 'kontak' => $item->kontak,
                 'email' => $item->email,
@@ -29,6 +29,6 @@ class DosenExport implements FromCollection, WithHeadings
     }
 
     public function headings(): array{
-        return ["No", "NIK", "Nama", "Kontak", "Email", "Jenis Kelamin"];
+        return ["No", "NIM", "Nama", "Kontak", "Email", "Jenis Kelamin"];
     }
 }

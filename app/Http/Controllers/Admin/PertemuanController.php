@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\PertemuanExport;
 use App\Http\Controllers\Controller;
 use App\Models\KelasMakul;
 use App\Models\Akademik;
@@ -13,6 +14,7 @@ use App\Models\Pertemuan;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf; 
+use Maatwebsite\Excel\Facades\Excel;
 
 class PertemuanController extends Controller
 {
@@ -103,6 +105,7 @@ class PertemuanController extends Controller
         }
     }
 
+    // PDF
     public function exportPdf($kode_kelas){
         $pertemuan = Pertemuan::where('kode_kelas', $kode_kelas)->get();
 
@@ -114,5 +117,10 @@ class PertemuanController extends Controller
         $pdf = Pdf::loadView('admin.kelas_makul.pdf_pertemuan', $data);
 
         return $pdf->stream('data_pertemuan.pdf');
+    }
+
+    // EXCEL
+    public function exportExcel($kode_kelas){
+        return Excel::download(new PertemuanExport($kode_kelas), 'Data_Pertemuan.xlsx');
     }
 }
