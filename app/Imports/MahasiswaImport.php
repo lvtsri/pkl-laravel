@@ -17,6 +17,12 @@ class MahasiswaImport implements ToModel, WithHeadingRow, WithValidation
     */
     public function model(array $row)
     {
+        $cek_mhs = Mahasiswa::where('nim', $row['nim'])->exists();
+        
+        if ($cek_mhs) {
+            return null;
+        }
+
         return new Mahasiswa([
             'nim' => $row['nim'],
             'nama' => $row['nama'],

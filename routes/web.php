@@ -49,6 +49,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/dosen', [DosenController::class, 'index'])->name('admin.dosen');
     Route::post('/dosen', [DosenController::class, 'store'])->name('admin.dosen.store');
     Route::put('/dosen/{nik}', [DosenController::class, 'update'])->name('admin.dosen.update');
+    Route::post('/dosen/ubah-foto/{nik}', [DosenController::class, 'ubahFoto'])->name('admin.dosen.ubah_foto');
     Route::delete('/dosen/{nik}', [DosenController::class, 'destroy'])->name('admin.dosen.destroy');
     Route::get('/dosen/export-excel', [DosenController::class, 'exportExcel'])->name('admin.dosen.export_excel');
     Route::post('/dosen/import-excel', [DosenController::class, 'importExcel'])->name('admin.dosen.import_excel');
@@ -58,6 +59,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('admin.mahasiswa');
     Route::post('/mahasiswa', [MahasiswaController::class, 'store'])->name('admin.mahasiswa.store');
     Route::put('/mahasiswa/{nim}', [MahasiswaController::class, 'update'])->name('admin.mahasiswa.update');
+    Route::post('/mahasiswa/ubah-foto/{nim}', [MahasiswaController::class, 'ubahFoto'])->name('admin.mahasiswa.ubah_foto');
     Route::delete('/mahasiswa/{nim}', [MahasiswaController::class, 'destroy'])->name('admin.mahasiswa.destroy');
     Route::get('/mahasiswa/pdf', [MahasiswaController::class, 'exportPdf'])->name('admin.mahasiswa.pdf');
     Route::get('/mahasiswa/export-excel', [MahasiswaController::class, 'exportExcel'])->name('admin.mahasiswa.export_excel');

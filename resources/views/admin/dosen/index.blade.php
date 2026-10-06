@@ -56,11 +56,13 @@
                 @endif
               </td>
               <td>
+                <button type="button" class="btn" data-toggle="modal" data-target="#modal-ubah-foto" data-nik="{{ $d->nik }}">
                 @if ($d->kelamin == 'P')
-                  <img src="{{ !empty($img) ? $img : asset('asset_web/img/dosen-woman.jpg') }}" style="width: 60px; height: 60px; object-fit: cover;">
+                  <img src="{{ !empty($d->img) ? asset('storage/' . $d->img) : asset('asset_web/img/dosen-woman.jpg') }}" style="width: 60px; height: 60px; object-fit: cover;">
                 @else
-                  <img src="{{ !empty($img) ? $img : asset('asset_web/img/dosen-man.jpg') }}" style="width: 60px; height: 60px; object-fit: cover;">
+                  <img src="{{ !empty($d->img) ? asset('storage/' . $d->img) : asset('asset_web/img/dosen-man.jpg') }}" style="width: 60px; height: 60px; object-fit: cover;">
                 @endif
+                </button>
               </td>
               <td class="text-center">
                 <div style="display: flex; gap: 5px; justify-content: center;">
@@ -209,6 +211,43 @@
     <!-- /.modal-dialog -->
   </div>
 
+  <!-- MODAL UBAH FOTO -->
+  <div class="modal fade" id="modal-ubah-foto">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Ubah Foto Dosen</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id="form-ubah-foto" method="post" enctype="multipart/form-data">
+          @csrf
+
+          <div class="modal-body">
+            <div class="form-group">
+              NIK : 
+              <input type="text" name="nik" readonly>
+            </div>
+            <div class="form-group">
+              <label for="foto_dosen">Upload File</label>
+              <input type="file" class="form-control" name="foto_dosen" required>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            <button type="submit" name="btn_ubah_foto" class="btn btn-success">
+              Ubah Foto
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
   <!-- MODAL IMPOR -->
   <div class="modal fade" id="modal-impor">
     <div class="modal-dialog">
@@ -262,6 +301,16 @@
 
     var updateUrl = "{{ url('admin/dosen') }}/" + encodeURIComponent(nik);
     modal.find('#form-edit').attr('action', updateUrl);
+  });
+
+  $('#modal-ubah-foto').on('show.bs.modal', function(e){
+    var nik = $(e.relatedTarget).data('nik');
+
+    var modal = $(this);
+    modal.find('input[name="nik"]').val(nik);
+
+    var updateUrl = "{{ url('admin/dosen/ubah-foto') }}/" + encodeURIComponent(nik);
+    modal.find('#form-ubah-foto').attr('action', updateUrl);
   });
 </script>  
 @endpush

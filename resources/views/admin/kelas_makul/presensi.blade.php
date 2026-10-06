@@ -15,7 +15,11 @@
                 <div style="display: flex; gap: 50px; align-items: flex-start;">
                     <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
                         <div>
-                            <img src="{{ asset('asset_web/img/mhs-woman.jpg') }}" style="width: 200px;">
+                        @if ($info->dosen->kelamin == 'P')
+                            <img src="{{ !empty($info->dosen->img) ? asset('storage/' . $info->dosen->img) : asset('asset_web/img/dosen-woman.jpg') }}" style="width: 210px; object-fit: cover;">
+                        @else
+                            <img src="{{ !empty($info->dosen->img) ? asset('storage/' . $info->dosen->img) : asset('asset_web/img/dosen-man.jpg') }}" style="width: 210px; object-fit: cover;">
+                        @endif
                         </div>
                         @if ($status_pertemuan == '0')
                             <form action="{{ route('admin.kelas_makul.presensi.toggle', $id_pertemuan) }}" method="POST" style="display:inline;">

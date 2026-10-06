@@ -10,6 +10,7 @@ use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 
 class DosenController extends Controller
 {
@@ -82,7 +83,24 @@ class DosenController extends Controller
             'email' => trim ($request->email),
             'kelamin' => trim ($request->kelamin),
         ]);
+        
+        return redirect()->route('admin.dosen')->with('success', 'Data dosen telah berhasil diubah!');
+    }
 
+    public function ubahFoto(Request $request, $nik){
+        $dosen = Dosen::findOrFail($nik);
+        
+        if ($request->hasFile('foto_dosen')) {
+            // Hapus foto lama dari disk
+            if ($dosen->img && !str_contains($dosen->img, '../') && Storage::disk('public')->exists($dosen->img)) {
+                Storage::disk('public')->delete($dosen->img);
+            }
+            // Upload foto baru ke folder images di disk public
+            $path = $request->file('foto_dosen')->store('images', 'public');
+            $dosen->img = $path;
+        }
+        $dosen->update($request->except('foto_dosen'));
+        
         return redirect()->route('admin.dosen')->with('success', 'Data dosen telah berhasil diubah!');
     }
 

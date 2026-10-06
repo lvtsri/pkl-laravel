@@ -18,7 +18,7 @@
           @csrf
           <div class="form-group">
             <label for="password_lama">Password Lama</label>
-            <input type="text" name="pengguna" value="{{ $nik }}" class="form-control" readonly>
+            <input type="text" name="pengguna" value="{{ $nik }}" class="form-control" hidden>
             <input type="password" name="password_lama" class="form-control" placeholder="Masukkan password lama" required>
           </div>
           <div class="form-group">

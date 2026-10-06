@@ -5,8 +5,11 @@ namespace App\Exports;
 use App\Models\Dosen;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;  //lebar auto
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class DosenExport implements FromCollection, WithHeadings
+class DosenExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -30,5 +33,13 @@ class DosenExport implements FromCollection, WithHeadings
 
     public function headings(): array{
         return ["No", "NIK", "Nama", "Kontak", "Email", "Jenis Kelamin"];
+    }
+    
+    public function styles(Worksheet $sheet)
+    {
+        return [
+                1 => ['font' => ['bold' => true],
+            ],
+        ];
     }
 }

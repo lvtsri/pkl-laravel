@@ -5,8 +5,11 @@ namespace App\Exports;
 use App\Models\Mahasiswa;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class MahasiswaExport implements FromCollection, WithHeadings
+class MahasiswaExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -30,5 +33,13 @@ class MahasiswaExport implements FromCollection, WithHeadings
 
     public function headings(): array{
         return ["No", "NIM", "Nama", "Kontak", "Email", "Jenis Kelamin"];
+    }
+    
+    public function styles(Worksheet $sheet)
+    {
+        return [
+                1 => ['font' => ['bold' => true],
+            ],
+        ];
     }
 }

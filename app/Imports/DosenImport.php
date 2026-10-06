@@ -17,6 +17,12 @@ class DosenImport implements ToModel, WithHeadingRow, WithValidation
     */
     public function model(array $row)
     {
+        $cek_dosen = Dosen::where('nik', $row['nik'])->exists();
+        
+        if ($cek_dosen) {
+            return null;
+        }
+
         return new Dosen([
             'nik' => $row['nik'],
             'nama' => $row['nama'],

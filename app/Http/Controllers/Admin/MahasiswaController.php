@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\MahasiswaImport;
+use Illuminate\Support\Facades\Storage;
 
 class MahasiswaController extends Controller
 {
@@ -82,6 +83,23 @@ class MahasiswaController extends Controller
             'kelamin' => trim ($request->kelamin),
         ]);
 
+        return redirect()->route('admin.mahasiswa')->with('success', 'Data mahasiswa telah berhasil diubah!');
+    }
+    
+    public function ubahFoto(Request $request, $nim){
+        $mahasiswa = Mahasiswa::findOrFail($nim);
+        
+        if ($request->hasFile('foto_mhs')) {
+            // Hapus foto lama dari disk
+            if ($mahasiswa->img && !str_contains($mahasiswa->img, '../') && Storage::disk('public')->exists($mahasiswa->img)) {
+                Storage::disk('public')->delete($mahasiswa->img);
+            }
+            // Upload foto baru ke folder images di disk public
+            $path = $request->file('foto_mhs')->store('images', 'public');
+            $mahasiswa->img = $path;
+        }
+        $mahasiswa->update($request->except('foto_mhs'));
+        
         return redirect()->route('admin.mahasiswa')->with('success', 'Data mahasiswa telah berhasil diubah!');
     }
 

@@ -5,9 +5,11 @@ namespace App\Exports;
 use App\Models\Pertemuan;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Override;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class PertemuanExport implements FromCollection, WithHeadings
+class PertemuanExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStyles
 {
     protected $kode_kelas;
 
@@ -31,9 +33,16 @@ class PertemuanExport implements FromCollection, WithHeadings
         });
     }
 
-    #[Override]
     public function headings(): array
     {
         return ["Pertemuan ke", "Judul Pertemuan", "Tanggal"];
+    }
+    
+    public function styles(Worksheet $sheet)
+    {
+        return [
+                1 => ['font' => ['bold' => true],
+            ],
+        ];
     }
 }
