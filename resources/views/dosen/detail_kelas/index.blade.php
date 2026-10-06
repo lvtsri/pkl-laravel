@@ -59,6 +59,7 @@
                             <th width="5%">No</th>
                             <th>NIM</th>
                             <th>Nama Mahasiswa</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,6 +68,15 @@
                             <td>{{ $no++ }}</td>
                             <td>{{ $dk->nim }}</td>
                             <td class="text-left">{{ $dk->mahasiswa->nama }}</td>
+                            <td>
+                                <form action="{{ route('dosen.detail_kelas.destroy', ['id' => $dk->id]) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Mahasiswa yang dipilih akan dihapus dari kelas ini. Lanjutkan?')">
+                                    <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                         @empty
                         <tr class="text-center">

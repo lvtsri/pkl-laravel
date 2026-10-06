@@ -64,11 +64,11 @@
                         </tr>
                         <tr>
                             <th>Hari</th>
-                            <td>: </td>
+                            <td>: {{ date('l', strtotime($pertemuan->tanggal)) }}</td>
                         </tr>
                         <tr>
                             <th>Tanggal</th>
-                            <td>: {{ $pertemuan->tanggal }}</td>
+                            <td>: {{ date('d F Y', strtotime($pertemuan->tanggal)) }}</td>
                         </tr>
                         <tr>
                             <th>Pertemuan ke</th>

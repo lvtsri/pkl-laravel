@@ -4,12 +4,39 @@ namespace App\Http\Controllers\Dosen;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Pengguna;
 
 class PasswordController extends Controller
 {
     public function index(){
+        $nik = session('username');
+
         return view('dosen.password.index', [
             'hal' => 'password',
+            'nik' => $nik,
         ]);
+    }
+
+    public function update(Request $request, $nik){
+        $request->validate([
+            'password_lama' => 'required',
+            'password_baru' => 'required',
+            'pin' => 'required',
+        ]);
+
+        $password_lama = sha1(trim($request->input('password_lama')));
+        $password_baru = sha1(trim($request->input('password_baru')));
+        $pin = trim($request->input('pin'));
+
+        $pengguna = Pengguna::where('username', $nik)->first();
+
+        if ($pengguna && $password_lama === $pengguna->sandi && $pin === $pengguna->pin) {
+            $pengguna->update([
+                'sandi' => $password_baru,
+            ]);
+            return redirect()->back()->with('success', 'Password telah berhasil diubah!');
+        } else {
+            return redirect()->back()->with('error', 'Password lama atau PIN salah!');
+        }
     }
 }

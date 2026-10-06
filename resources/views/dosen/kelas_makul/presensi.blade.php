@@ -64,11 +64,11 @@
                         </tr>
                         <tr>
                             <th>Hari</th>
-                            <td>: </td>
+                            <td>: {{ date('l', strtotime($pertemuan->tanggal)) }}</td>
                         </tr>
                         <tr>
                             <th>Tanggal</th>
-                            <td>: {{ $pertemuan->tanggal }}</td>
+                            <td>: {{ date('d F Y', strtotime($pertemuan->tanggal)) }}</td>
                         </tr>
                         <tr>
                             <th>Pertemuan ke</th>
@@ -135,9 +135,66 @@
         </div>
     </div>
 </div>
+
+<!-- MODAL EDIT DATA-->
+<div class="modal fade" id="modal-edit-mhs">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Kehadiran Mahasiswa</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form-edit-kehadiran" method="post">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <input type="text" name="id" hidden required>
+                        <input type="text" name="id_pertemuan" value="{{ $id_pertemuan }}" hidden>
+                        
+                        <select class="form-control" name="status_kehadiran" required>
+                            <option value="">-- Pilih Kehadiran --</option>
+                            <option value="hadir">Hadir</option>
+                            <option value="izin">Izin</option>
+                            <option value="sakit">Sakit</option>
+                            <option value="alpha">Alpha</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    <button type="submit" name="btn_edit_mhs" class="btn btn-primary">
+                        <i class="fas fa-pen"></i>
+                        Simpan
+                    </button>
+                </div>
+            </form>
+        </div>
+    <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 @endsection
 
 @push('scripts')
+<script>
+    $('#modal-edit-mhs').on('show.bs.modal', function(e){
+        var button = $(e.relatedTarget);
+        var id = button.data('id');
+        var status_kehadiran = button.data('status_kehadiran');
+
+        var modal = $(this);
+        modal.find('input[name="id"]').val(id);
+        modal.find('select[name="status_kehadiran"]').val(status_kehadiran);
+
+        var actionUrl = "{{ url('/admin/kelas-makul/presensi/kehadiran') }}/" + id;
+        modal.find('#form-edit-kehadiran').attr('action', actionUrl);
+    })
+</script>
+
 {{-- TIMER --}}
 @if ($status_pertemuan == '1')
     <script>

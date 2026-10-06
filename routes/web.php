@@ -136,9 +136,11 @@ Route::prefix('dosen')->group(function () {
 
     // Detail kelas
     Route::get('/detail-kelas/{kode_kelas}', [DosenDetailKelasController::class, 'index'])->name('dosen.detail_kelas');
+    Route::delete('/detail-kelas/{id}', [DosenDetailKelasController::class, 'destroy'])->name('dosen.detail_kelas.destroy');
 
     // Password
     Route::get('/password', [DosenPasswordController::class, 'index'])->name('dosen.password');
+    Route::post('/password/{nik}', [DosenPasswordController::class, 'update'])->name('dosen.password.update');
 });
 
 // MHS

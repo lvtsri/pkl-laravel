@@ -8,6 +8,9 @@ class Pengguna extends Model
 {
     protected $table = 'tb_pengguna';
     protected $primaryKey = 'id';
+    protected $casts = [
+        'pin' => 'string'
+    ];
     protected $fillable = [
         'username',
         'sandi',

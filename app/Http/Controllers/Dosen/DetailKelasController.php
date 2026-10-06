@@ -24,4 +24,19 @@ class DetailKelasController extends Controller
             'list_mhs' => $list_mhs,
         ]);
     }
+
+    public function destroy($id){
+        $mahasiswa = DetailKelasMakul::where('id', $id)->first();
+
+        if (!$mahasiswa) {
+        return redirect()->back()->with('error', 'Data mahasiswa tidak valid!');
+        }
+
+        try {
+            $mahasiswa->delete();
+            return redirect()->back()->with('success', 'Data mahasiswa telah berhasil dihapus');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Gagal menghapus data mahasiswa');
+        }
+    }
 }
