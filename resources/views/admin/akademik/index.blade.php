@@ -19,6 +19,10 @@
         <i class="fas fa-file-excel"></i>
         Ekspor Data
       </a>
+      <button class="btn btn-warning mb-2" data-toggle="modal" data-target="#modal-impor">
+        <i class="fas fa-file-excel"></i>
+        Impor Data
+      </button>
 
       <table id="example1" class="table table-bordered table-striped text-center">
         <thead>
@@ -189,6 +193,38 @@
             <button type="submit" name="btn_edit" class="btn btn-primary">
               <i class="fas fa-plus"></i>
               Simpan Perubahan
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+  <!-- MODAL IMPOR -->
+  <div class="modal fade" id="modal-impor">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Impor Data Periode Akademik</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="{{ route('admin.akademik.import_excel') }}" method="post" enctype="multipart/form-data">
+          @csrf
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="file">Upload File</label>
+              <input type="file" class="form-control" name="file_excel" required>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            <button type="submit" name="btn_impor" class="btn btn-success">
+              Impor Data
             </button>
           </div>
         </form>

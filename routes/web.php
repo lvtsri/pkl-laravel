@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 
 // Controller Admin
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PenggunaController;
 use App\Http\Controllers\Admin\DosenController;
 use App\Http\Controllers\Admin\MahasiswaController;
@@ -37,7 +37,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 // ================= AREA ADMIN =================   
 Route::prefix('admin')->group(function () {
     // Dashboard Beranda
-    Route::get('/', [AdminDashboardController::class, 'index'])->name('admin');
+    Route::get('/', [DashboardController::class, 'index'])->name('admin');
 
     // Pengguna
     Route::get('/pengguna', [PenggunaController::class, 'index'])->name('admin.pengguna');
@@ -115,6 +115,7 @@ Route::prefix('admin')->group(function () {
     Route::delete('/akademik/{kode_akd}', [AkademikController::class, 'destroy'])->name('admin.akademik.destroy');
     Route::get('/akademik/pdf', [AkademikController::class, 'exportPdf'])->name('admin.akademik.pdf');
     Route::get('/akademik/export-excel', [AkademikController::class, 'exportExcel'])->name('admin.akademik.export_excel');
+    Route::post('/akademik/import-excel', [AkademikController::class, 'importExcel'])->name('admin.akademik.import_excel');
 
     // Password / Ganti Sandi Admin
     Route::get('/password', [PasswordController::class, 'index'])->name('admin.password');

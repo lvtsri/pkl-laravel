@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\AkademikExport;
+use App\Imports\AkademikImport;
 use App\Models\Akademik;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -98,5 +99,15 @@ class AkademikController extends Controller
     // EXCEL
     public function exportExcel(){
         return Excel::download(new AkademikExport, 'Data_Periode_Akademik.xlsx');
+    }
+
+    public function importExcel(Request $request){
+        $request->validate([
+            'file_excel' => 'required',
+        ]);
+
+        Excel::import(new AkademikImport, $request->file('file_excel'));
+        
+        return back()->with('success', 'Data periode akademik telah berhasil diimpor');
     }
 }

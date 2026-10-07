@@ -70,9 +70,14 @@ class PenggunaController extends Controller
 
     public function destroy($username){
         $pengguna = Pengguna::where('username', $username)->first();
+        $pengguna_login = session('username');
 
         if(!$pengguna){
             return redirect()->route('admin.pengguna')->with('error', 'Data pengguna tidak valid!');
+        }
+
+        if ($pengguna_login == $pengguna->username) {
+            return redirect()->route('admin.pengguna')->with('error', 'Anda tidak bisa menghapus akun milik anda sendiri!');
         }
 
         try {
