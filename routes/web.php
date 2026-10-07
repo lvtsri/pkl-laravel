@@ -118,7 +118,7 @@ Route::prefix('admin')->group(function () {
 
     // Password / Ganti Sandi Admin
     Route::get('/password', [PasswordController::class, 'index'])->name('admin.password');
-    Route::put('/password/update', [PasswordController::class, 'update'])->name('admin.password.update');
+    Route::post('/password/{username}', [PasswordController::class, 'update'])->name('admin.password.update');
 });
 
 // DOSEN
@@ -155,4 +155,5 @@ Route::prefix('mahasiswa')->group(function () {
 
     // Password
     Route::get('/password', [MhsPasswordController::class, 'index'])->name('mahasiswa.password');
+    Route::post('/password/{username}', [MhsPasswordController::class, 'update'])->name('mahasiswa.password.update');
 });

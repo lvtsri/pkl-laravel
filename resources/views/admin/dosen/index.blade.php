@@ -226,10 +226,7 @@
 
           <div class="modal-body">
             <div class="form-group">
-              NIK : 
-              <input type="text" name="nik" readonly>
-            </div>
-            <div class="form-group">
+              <input type="text" name="nik" hidden>
               <label for="foto_dosen">Upload File</label>
               <input type="file" class="form-control" name="foto_dosen" required>
             </div>

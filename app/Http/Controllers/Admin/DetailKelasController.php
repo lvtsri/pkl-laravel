@@ -17,17 +17,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class DetailKelasController extends Controller
 {
-    private function ensureAdmin()
-    {
-        if (session('peran') != 'A') {
-            return redirect('/logout')->with('error', 'Anda bukan admin! Akan segera di logout-kan');
-        }
-        return null;
-    }
-
     public function index($kode_kelas){
-        if ($res = $this->ensureAdmin()) return $res;
-        
         $info = KelasMakul::with(['akademik', 'makul', 'jurusan', 'dosen'])->where('kode_kelas', $kode_kelas)->first();
 
         $detail_kelas = DetailKelasMakul::with(['mahasiswa'])->where('kode_kelas', $kode_kelas)->get();

@@ -11,17 +11,7 @@ use Illuminate\Http\Request;
 
 class PresensiController extends Controller
 {
-    private function ensureAdmin()
-    {
-        if (session('peran') != 'A') {
-            return redirect('/logout')->with('error', 'Anda bukan admin! Akan segera di logout-kan');
-        }
-        return null;
-    }
-
     public function index($id_pertemuan){
-        if ($res = $this->ensureAdmin()) return $res;
-        
         $pertemuan = Pertemuan::where('id', $id_pertemuan)->first();
         $kode_kelas = $pertemuan->kode_kelas;
 
