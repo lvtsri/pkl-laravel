@@ -27,6 +27,7 @@ use App\Http\Controllers\Dosen\PasswordController as DosenPasswordController;
 use App\Http\Controllers\Mahasiswa\DashboardController as MhsDashboardController;
 use App\Http\Controllers\Mahasiswa\KelasMakulController as MhsKelasMakulController;
 use App\Http\Controllers\Mahasiswa\PasswordController as MhsPasswordController;
+use App\Models\Makul;
 
 // ================= AUTH & PIN =================
 Route::get('/', [LoginController::class, 'showLogin'])->name('login');
@@ -72,6 +73,7 @@ Route::prefix('admin')->group(function () {
     Route::delete('/jurusan/{kode_jurusan}', [JurusanController::class, 'destroy'])->name('admin.jurusan.destroy');
     Route::get('/jurusan/pdf', [JurusanController::class, 'exportPdf'])->name('admin.jurusan.pdf');
     Route::get('jurusan/export-excel', [JurusanController::class, 'exportExcel'])->name('admin.jurusan.export_excel');
+    Route::post('/jurusan/import-excel', [JurusanController::class, 'importExcel'])->name('admin.jurusan.import_excel');
 
     // Mata Kuliah (Makul)
     Route::get('/makul', [MakulController::class, 'index'])->name('admin.makul');
@@ -80,6 +82,7 @@ Route::prefix('admin')->group(function () {
     Route::delete('/makul/{kode_makul}', [MakulController::class, 'destroy'])->name('admin.makul.destroy');
     Route::get('/makul/pdf', [MakulController::class, 'exportPdf'])->name('admin.makul.pdf');
     Route::get('/makul/export-excel', [MakulController::class, 'exportExcel'])->name('admin.makul.export_excel');
+    Route::post('/makul/import-excel', [MakulController::class, 'importExcel'])->name('admin.makul.import_excel');
 
     // Kelas Makul
     Route::get('/kelas-makul', [KelasMakulController::class, 'index'])->name('admin.kelas_makul');

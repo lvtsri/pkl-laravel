@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\JurusanExport;
 use App\Models\Jurusan;
 use App\Http\Controllers\Controller;
+use App\Imports\JurusanImport;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
@@ -90,5 +91,15 @@ class JurusanController extends Controller
     // EXCEL
     public function exportExcel(){
         return Excel::download(new JurusanExport, 'Data_Jurusan.xlsx');
+    }
+
+    public function importExcel(Request $request){
+        $request->validate([
+            'file_excel' => 'required',
+        ]);
+
+        Excel::import(new JurusanImport, $request->file('file_excel'));
+        
+        return back()->with('success', 'Data jurusan telah berhasil diimpor');
     }
 }

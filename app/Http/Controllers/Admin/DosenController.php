@@ -138,6 +138,6 @@ class DosenController extends Controller
 
         Excel::import(new DosenImport, $request->file('file_excel'));
         
-        return back()->with('success', 'Data dosen telah berhasil diimpor dengan format excel');
+        return back()->with('success', 'Data dosen telah berhasil diimpor');
     }
 }

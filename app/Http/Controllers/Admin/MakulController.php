@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\MakulExport;
+use App\Imports\MakulImport;
 use App\Models\Makul;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -100,5 +101,15 @@ class MakulController extends Controller
     // EXCEL
     public function exportExcel(){
         return Excel::download(new MakulExport, 'Data_Makul.xlsx');
+    }
+
+    public function importExcel(Request $request){
+        $request->validate([
+            'file_excel' => 'required',
+        ]);
+
+        Excel::import(new MakulImport, $request->file('file_excel'));
+        
+        return back()->with('success', 'Data mata kuliah telah berhasil diimpor');
     }
 }
