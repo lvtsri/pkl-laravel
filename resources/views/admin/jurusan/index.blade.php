@@ -25,7 +25,7 @@
         Impor Data
       </button>
 
-      <table id="example1" class="table table-bordered table-striped text-center">
+      <table id="jurusan-table" class="table table-bordered table-striped text-center">
         <thead>
           <tr class="text-center">
             <th width="5%">No</th>
@@ -34,39 +34,8 @@
             <th>Aksi</th>
           </tr>
         </thead>
-        <?php
-        $no = 1;
-        ?>
         <tbody>
-          @forelse ($jurusan as $j)
-            <tr>
-              <td>{{ $no++ }}</td>
-              <td>{{ $j->kode_jurusan }}</td>
-              <td class="text-left">{{ $j->nama_jurusan }}</td>
-              <td class="text-center">
-                <div style="display: flex; gap: 5px; justify-content: center;">
-                  <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit"
-                    data-kode_jurusan = "{{ $j->kode_jurusan }}"
-                    data-nama_jurusan = "{{ $j->nama_jurusan }}"
-                  >
-                    <i class="fas fa-pen"></i>
-                  </button>
-
-                  <form action="{{ route('admin.jurusan.destroy', $j->kode_jurusan) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Data jurusan yang dipilih akan dihapus. Lanjutkan?')">
-                      <i class="fas fa-trash"></i>
-                    </button>
-                  </form>
-                </div>
-              </td>
-            </tr>
-          @empty
-            <tr>
-              <td colspan="6" class="text-center">Data jurusan tidak ditemukan</td>
-            </tr>
-          @endforelse
+          {{--  --}}
         </tbody>
       </table>
     </div>
@@ -167,6 +136,13 @@
               <label for="file">Upload File</label>
               <input type="file" class="form-control" name="file_excel" required>
             </div>
+            <div class="form-group">
+              <label for="">Install Template Excel</label><br>
+              <a href="{{ route('admin.jurusan.template') }}" class="btn btn-success mb-2">
+                <i class="fas fa-file-download"></i>
+                Jurusan.xlsx
+              </a>
+            </div>
           </div>
           <div class="modal-footer justify-content-between">
             <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -185,6 +161,20 @@
 
 @push('scripts')
 <script>
+  $(function(){
+    $('#jurusan-table').DataTable({
+      processing: true,   //nampilin loading
+      serverSide: true,   //pemrosesan data dilakuin di server/database, bukan di browser user
+      ajax: "{{ route('admin.jurusan') }}",
+      columns: [
+        { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+        { data: 'kode_jurusan', name: 'kode_jurusan' },
+        { data: 'nama_jurusan', name: 'nama_jurusan' },
+        { data: 'action', name: 'action', orderable: false, searchable: false }
+      ]
+    });
+  });
+
   $('#modal-edit').on('show.bs.modal', function(e){
     var button = $(e.relatedTarget);
     var kode_jurusan = button.data('kode_jurusan');

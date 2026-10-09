@@ -74,6 +74,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/jurusan/pdf', [JurusanController::class, 'exportPdf'])->name('admin.jurusan.pdf');
     Route::get('jurusan/export-excel', [JurusanController::class, 'exportExcel'])->name('admin.jurusan.export_excel');
     Route::post('/jurusan/import-excel', [JurusanController::class, 'importExcel'])->name('admin.jurusan.import_excel');
+    Route::get('/jurusan/template', [JurusanController::class, 'downloadTemplate'])->name('admin.jurusan.template');
 
     // Mata Kuliah (Makul)
     Route::get('/makul', [MakulController::class, 'index'])->name('admin.makul');

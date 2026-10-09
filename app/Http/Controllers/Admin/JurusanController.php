@@ -3,19 +3,50 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\JurusanExport;
+use App\Exports\Jurusan\JurusanTemplateExport;
 use App\Models\Jurusan;
 use App\Http\Controllers\Controller;
 use App\Imports\JurusanImport;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\Facades\DataTables;
 
 class JurusanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $jurusan = Jurusan::all();
-        return view('admin.jurusan.index', compact('jurusan') + ['hal' => 'data_jurusan']);
+        if (request()->ajax()) {
+            $data = Jurusan::query();
+                return DataTables::of($data)->addIndexColumn()->addColumn('action', function($row){
+                    $editUrl = url('admin/jurusan/' . $row->kode_jurusan);
+                    $destroyUrl = route('admin.jurusan.destroy', $row->kode_jurusan);
+                    $csrf = csrf_field();
+                    $method = method_field('DELETE');
+
+                    return '
+                    <div style="display: flex; gap: 5px; justify-content: center;">
+                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-edit"
+                            data-kode_jurusan="' . $row->kode_jurusan . '"
+                            data-nama_jurusan="' . $row->nama_jurusan . '"
+                        >
+                            <i class="fas fa-pen"></i>
+                        </button>
+                        <form action="' . $destroyUrl . '" method="POST">
+                            ' . $csrf . '
+                            ' . $method . '
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Data jurusan yang dipilih akan dihapus. Lanjutkan?\')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>';
+                })
+                ->rawColumns(['action']) //biar tag HTML di kolom action bisa dirender
+                ->make(true);
+        }
+        return view('admin.jurusan.index', [
+            'hal' => 'data_jurusan',
+        ]);
     }
 
     // Tambah
@@ -101,5 +132,9 @@ class JurusanController extends Controller
         Excel::import(new JurusanImport, $request->file('file_excel'));
         
         return back()->with('success', 'Data jurusan telah berhasil diimpor');
+    }
+
+    public function downloadTemplate(){
+        return Excel::download(new JurusanTemplateExport, 'template-jurusan.xlsx');
     }
 }

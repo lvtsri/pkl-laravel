@@ -17,6 +17,10 @@ class JurusanImport implements ToModel, WithHeadingRow, WithValidation
     */
     public function model(array $row)
     {
+        if (empty($row['nama_jurusan'])) {
+            return null;
+        }
+
         $cek_jurusan = Jurusan::where('kode_jurusan', $row['kode_jurusan'])->exists();
 
         if ($cek_jurusan) {
@@ -33,8 +37,8 @@ class JurusanImport implements ToModel, WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
-            'kode_jurusan' => 'required',
-            'nama_jurusan' => 'required',
+            'kode_jurusan' => 'nullable|required_with:nama_jurusan',
+            'nama_jurusan' => 'nullable',
         ];
     }
 }
